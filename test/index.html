@@ -1,0 +1,36 @@
+<html>
+<head>
+    <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine/jasmine.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/jasmine.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/jasmine-html.js"></script>
+    <script type="text/javascript" src="jasmine/lib/jasmine/boot.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+<body>
+
+<div id="includedContent"></div>
+
+<script>
+    beforeAll(function (done) {
+        $("#includedContent").load("/index.html",function() {
+            done();
+        })
+    });
+
+    describe("FeedbackWidget", function () {
+        it("is defined", function () {
+            expect($(feedback)).toBeDefined();
+        });
+        it("is hidden", function () {
+            feedback.hide();
+            expect($("#"+feedback.elementId).attr('style')).toBe('display: none;');
+        });
+    });
+</script>
+
+
+</body>
+</html>
