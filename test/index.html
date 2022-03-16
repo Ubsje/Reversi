@@ -29,6 +29,24 @@
             expect($("#"+feedback.elementId).attr('style')).toBe('display: none;');
         });
     });
+
+    describe("Game", function () {
+        it("is available globally", function () {
+            expect($(Game)).toBeDefined();
+        });
+        it("has init()", function () {
+            expect($(Game.init())).toBeDefined();
+        });
+        it("has Reversi.init()", function () {
+            expect($(Game.Reversi.init())).toBeDefined();
+        });
+        it("has Data.nit()", function () {
+            expect($(Game.Data.init())).toBeDefined();
+        });
+        it("has Model.init()", function () {
+            expect($(Game.Model.init())).toBeDefined();
+        });
+    });
 </script>
 
 
