@@ -35,11 +35,16 @@
     $(function() {
         console.log( "ready!" );
         feedback = new FeedbackWidget("feedback");
+        Game.init(afterInit);
     });
 
     $("#ok-button").on("click", function(){
         feedback.show("yoooo", "success");
     });
+
+    function afterInit() {
+        console.log('Game init voltooid')
+    }
 </script>
 </body>
 </html>

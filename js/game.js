@@ -7,9 +7,8 @@ const Game = (function(url){
     }
 
     // Private function init
-    const privateInit = function(){
-        console.log(configMap.apiUrl);
-
+    const privateInit = function(afterInit){
+        afterInit();
     }
 
     // Waarde/object geretourneerd aan de outer scope
