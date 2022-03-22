@@ -39,6 +39,38 @@ Game.Data = (function() {
 
     //Configuratie en state waarden
     let configMap = {
+        apiKey: "7789eac46df7cfaa368fadc59aff45c3",
+        mock: [
+            {
+                url: "api/Spel/Beurt",
+                data: 0
+            }
+        ]
+    }
+
+    const get = function(url){
+        // return $.get(url + configMap.apiKey)
+        //     .then(r => {
+        //         return r
+        //     })
+        //     .catch(e => {
+        //         console.log(e.message);
+        //     });
+        return getMockData(url);
+    }
+
+    const getMockData = function(url){
+
+        //filter mock data, configMap.mock ... oei oei, moeilijk moeilijk :-)
+        const mockData = configMap.mock.filter(o => o.url == url)[0];
+
+        if (mockData == null)
+            return "Invalid URL";
+
+        return new Promise((resolve, reject) => {
+            resolve(mockData.data)
+        });
+
     }
 
     // Private function init
@@ -47,7 +79,8 @@ Game.Data = (function() {
 
     // Waarde/object geretourneerd aan de outer scope
     return {
-        init: privateInit
+        init: privateInit,
+        get: get
     }
 })()
 
@@ -58,12 +91,25 @@ Game.Model = (function() {
     let configMap = {
     }
 
+    const getWeather = function(){
+        Game.Data.get("http://api.openweathermap.org/data/2.5/weather?q=zwolle&apikey=")
+            .then(r => {
+                if (r.main.temp == null)
+                    throw new Error('Geen temperatuur aanwezig!');
+                console.log(r);
+            })
+            .catch(e => {
+                console.log(e.message);
+            });
+    }
+
     // Private function init
     const privateInit = function () {
     }
 
     // Waarde/object geretourneerd aan de outer scope
     return {
-        init: privateInit
+        init: privateInit,
+        getWeather: getWeather
     }
 })()
