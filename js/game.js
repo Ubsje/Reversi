@@ -48,15 +48,22 @@ Game.Data = (function() {
         ]
     }
 
+    let stateMap = {
+        environment : 'development'
+    }
+
     const get = function(url){
-        // return $.get(url + configMap.apiKey)
-        //     .then(r => {
-        //         return r
-        //     })
-        //     .catch(e => {
-        //         console.log(e.message);
-        //     });
-        return getMockData(url);
+        if (stateMap.environment == "development") {
+            return getMockData(url);
+        }
+
+        return $.get(url + configMap.apiKey)
+            .then(r => {
+                return r
+            })
+            .catch(e => {
+                console.log(e.message);
+            });
     }
 
     const getMockData = function(url){
@@ -74,7 +81,14 @@ Game.Data = (function() {
     }
 
     // Private function init
-    const privateInit = function () {
+    const privateInit = function (environment) {
+        if (!(environment == "production" || environment == "development")) {
+            throw new Error("environment moet production of development zijn");
+        }
+
+        stateMap.environment = environment;
+
+
     }
 
     // Waarde/object geretourneerd aan de outer scope
