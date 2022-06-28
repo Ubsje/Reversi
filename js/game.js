@@ -3,12 +3,18 @@ const Game = (function(url){
 
     //Configuratie en state waarden
     let configMap = {
-        apiUrl: url
+        apiUrl: url,
+        gameState: any
     }
 
     // Private function init
     const privateInit = function(afterInit){
         afterInit();
+        setInterval(_getCurrentGameState, 2000);
+    }
+
+    const _getCurrentGameState = function () {
+        configMap.gameState = Game.Model.getGameState("token");
     }
 
     // Waarde/object geretourneerd aan de outer scope
@@ -117,6 +123,20 @@ Game.Model = (function() {
             });
     }
 
+    const _getGameState = function(token){
+
+        //aanvraag via Game.Data
+
+        var gameState = Game.Data.get("/api/Spel/Beurt/"+token);
+
+        //controle of ontvangen data valide is
+        if (gameState < 0 || gameState > 2)
+            throw new Error("yo de gameState heeft geen geldige waarde");
+
+
+
+    }
+
     // Private function init
     const privateInit = function () {
     }
@@ -124,6 +144,7 @@ Game.Model = (function() {
     // Waarde/object geretourneerd aan de outer scope
     return {
         init: privateInit,
-        getWeather: getWeather
+        getWeather: getWeather,
+        getGameState: _getGameState
     }
 })()
